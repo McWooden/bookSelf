@@ -1,0 +1,107 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #eaeaea;
+}
+header {
+    width: 100vw;
+    color: #fff;
+    background-color: goldenrod;
+    padding: .5em 1em;
+}
+main {
+    display: flex;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+aside, .container {
+    width: 100%;
+    height: 100vh;
+    padding: .5em 1em;
+}
+aside {
+    background-color: tomato;
+}
+form, .bookSelf, #searchBar {
+    background-color: aqua;
+    padding: .5em;
+    border-radius: 5px;
+}
+form p {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+form input {
+    width: 100%;
+    outline: none;
+    background-color: salmon;
+    border: 2px solid #eaeaea;
+    margin-bottom: .5em;
+}
+.input-inline > * {
+    width: fit-content;
+}
+input[type="checkbox"]{
+    margin: 0;
+}
+form button {
+    background-color: goldenrod;
+    border: none;
+    padding: .5em;
+    width: 100%;
+    margin-top: 1em;
+    border-radius: 5px;
+}
+/* search bar */
+#searchBar {
+    margin: .5em 0;
+}
+.search-input {
+    display: flex;
+}
+.search-input input {
+    flex: 5;
+}
+.search-input button {
+    flex: 1;
+    margin-left: .5em;
+    background-color: goldenrod;
+    border: none;
+    border-radius: 5px;
+
+}
+
+/* container */
+.container {
+    background-color: greenyellow;
+}
+.bookSelf {
+    margin: .5em 0;
+    background-color: burlywood;
+}
+.card {
+    position: relative;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: .5em;
+    margin: .5em 0;
+}
+.card-edit {
+    display: flex;
+    flex-direction: column;
+}
+.btn-edit, .btn-save {
+    cursor: pointer;
+    position: absolute;
+    background-color: goldenrod;
+    top: 3px;
+    right: 3px;
+    border: none;
+    border-radius: 5px;
+    padding: .5em 1em;
+}
