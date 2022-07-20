@@ -1,20 +1,31 @@
+const defaultBookSelf = [{id: 123,title: 'Harry Potter and the Philosopher\'s Stone',author: 'J.K Rowling',year: 1997,isComplete: false},{id: 321,title: 'the beginning',author: 'steve',year: 2000,isComplete: true}]
 let rakBuku = [
-    {
-        id: 123,
-        title: 'the binengging',
-        author: 'anonymous',
-        year: 1999,
-        isComplete: false
-    },
-    {
-        id: 321,
-        title: 'the beginning',
-        author: 'steve',
-        year: 2000,
-        isComplete: true
-    }
+    // {
+    //     id: 123,
+    //     title: 'Buku belum',
+    //     author: 'anonymous',
+    //     year: 1999,
+    //     isComplete: false
+    // },
+    // {
+    //     id: 321,
+    //     title: 'the beginning',
+    //     author: 'steve',
+    //     year: 2000,
+    //     isComplete: true
+    // }
 ]
 let buku = []
+// storage
+    let chacheKey = 'bookSelf'
+    if (localStorage.getItem(chacheKey) == null) {
+        localStorage.setItem(chacheKey, JSON.stringify(defaultBookSelf))
+    }
+    function saveBookself() {
+        localStorage.setItem(chacheKey, JSON.stringify(rakBuku))
+    }
+
+// code
 document.getElementById('buatBuku').addEventListener('submit', (event) => {
     event.preventDefault()
 
@@ -30,7 +41,9 @@ document.getElementById('buatBuku').addEventListener('submit', (event) => {
 })
 
 window.addEventListener('load', () => {
+    rakBuku = JSON.parse(localStorage.getItem('bookSelf'))
     document.dispatchEvent(new Event('renderBook'))
+    document.getElementById('loader').style.display = 'none'
 })
 
 document.addEventListener('renderBook', () => {
@@ -38,10 +51,10 @@ document.addEventListener('renderBook', () => {
     document.getElementById('sudah').innerHTML = ''
     document.getElementById('result').innerHTML = ''
     createElement()
+    saveBookself()
 })
 
 document.getElementById('search').addEventListener('click', () => {
-    // document.dispatchEvent(new Event('renderBook'))
     let key = document.getElementById('search-key').value
     key.toLowerCase().split(' ').join('')
     buku.map(x => {
@@ -55,7 +68,7 @@ document.getElementById('search').addEventListener('click', () => {
 function createElement() {
     rakBuku.map(x => {
         // card text
-        const judul = document.createElement('h3')
+        const judul = document.createElement('h4')
         judul.innerText = x.title
 
         const penulis = document.createElement('p')
@@ -95,15 +108,23 @@ function createElement() {
         const toggleSelesai = document.createElement('div')
         toggleSelesai.classList.add('input-inline')
         toggleSelesai.append(toggleLabel, newComplete)
+
+        const hapusBuku = document.createElement('p')
+        hapusBuku.classList.add('hapus-buku')
+        hapusBuku.setAttribute('title', 'yakin?')
+        hapusBuku.innerText = 'Hapus'
+        hapusBuku.addEventListener('click', () => {
+            hapus(x.id)
+        })
         
         const cardEdit = document.createElement('div')
         cardEdit.classList.add('card-edit')
-        cardEdit.append(newTitle, newAuthor, newYear, toggleSelesai)
+        cardEdit.append(newTitle, newAuthor, newYear, toggleSelesai, hapusBuku)
         cardEdit.style.display = 'none'
 
         // edit button
         const editButton = document.createElement('button')
-        editButton.innerHTML = 'Edit'
+        editButton.innerHTML = 'Ubah'
         editButton.classList.add('btn-edit')
 
         editButton.addEventListener('click', (e) => {
@@ -116,7 +137,7 @@ function createElement() {
 
         // save Button
         const saveButton = document.createElement('button')
-        saveButton.innerHTML = 'save'
+        saveButton.innerHTML = 'simpan'
         saveButton.classList.add('btn-save')
         saveButton.style.display = 'none'
 
@@ -161,5 +182,14 @@ function saveState(idTarget, newTitle, newAuthor, newYear, newComplete) {
             buku.isComplete = newComplete
         }
     })
+}
+
+function hapus(targetID) {
+    for (let i in rakBuku) {
+        if (rakBuku[i].id == targetID) {
+            rakBuku.splice(i, 1)
+            document.dispatchEvent(new Event('renderBook'))
+        }
+    }
 }
 
